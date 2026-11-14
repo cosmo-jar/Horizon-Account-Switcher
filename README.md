@@ -1,6 +1,6 @@
 # Horizon Account Switcher
 
-An original, **GPL-3.0** native Rust mod for **Horizon (Minecraft 26.3+)** that lets you add, manage, and switch between Microsoft (online) and offline accounts directly inside the game without restarting.
+An original, native Rust mod for **Horizon (Minecraft 26.3+)** that lets you add, manage, and switch between Microsoft (online) and offline accounts directly inside the game without restarting.
 
 <img width="592" height="326" alt="Скриншот 14-11-2026 025057" src="https://github.com/user-attachments/assets/d06a2f75-6765-4e06-b152-3f6bb3778562" />
 
