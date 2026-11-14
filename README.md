@@ -65,7 +65,7 @@ All saved profiles and tokens stay **strictly on your local disk** inside Horizo
 
 Because Horizon does not yet expose an official hook point in `native_hooks.rs` for overriding the active auth session, this mod injects a `RETURN` mixin into `horizon_client_render::auth::current` alongside Horizon's standard `native_*` hooks (`native_client_tick_pre`, `native_mods`, `native_settings`, `native_settings_click`, `native_screen_*`). Per Horizon's native mod rules, raw function injections pin a tested `horizon_revision`. On newer Nightlies, Horizon Launcher can still rebuild it via **`Rebuild on Horizon`** (`--ignore-pins`) or **`Build anyway`** as long as `horizon_client_render::auth::current` remains compatible.
 
-## Architecture (Modular Rust Crate)
+## Architecture
 
 ```text
 mixins/account_switcher/
