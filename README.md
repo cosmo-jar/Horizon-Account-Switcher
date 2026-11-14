@@ -2,6 +2,13 @@
 
 An original, **GPL-3.0** native Rust mod for **Horizon (Minecraft 26.3+)** that lets you add, manage, and switch between Microsoft (online) and offline accounts directly inside the game without restarting.
 
+<img width="592" height="326" alt="Скриншот 14-11-2026 025057" src="https://github.com/user-attachments/assets/d06a2f75-6765-4e06-b152-3f6bb3778562" />
+
+<img width="1621" height="964" alt="Скриншот 14-11-2026 025124" src="https://github.com/user-attachments/assets/99229d6a-6ff8-4c9a-ba8e-dc3d787aa1fd" />
+
+<img width="1919" height="1079" alt="Скриншот 14-11-2026 030824" src="https://github.com/user-attachments/assets/92fbfe00-246d-4efa-9c07-ae4d721d38b3" />
+
+
 ## Features
 
 - **In-Game Account Switching**: Swap sessions live from the **Title Screen**, **Multiplayer Screen**, **Pause Menu**, or **Options → Mods** via the frosted profile pill or `Alt+A`.
