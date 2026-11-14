@@ -2,7 +2,9 @@
 name = "account_switcher_engine"
 version = "1.0.0"
 edition = "2024"
+authors = ["cosmo-jar"]
 license = "GPL-3.0"
+repository = "https://github.com/cosmo-jar/Horizon-Account-Switcher"
 description = "Core domain, encrypted storage, OAuth providers, skin cache, and liquid-glass UI controller for Horizon Account Switcher"
 
 [dependencies]
