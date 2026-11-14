@@ -1,0 +1,9 @@
+[workspace]
+resolver = "3"
+members = ["mixins/account_switcher/engine"]
+
+[workspace.lints.rust]
+dead_code = "deny"
+unused_imports = "deny"
+unused_variables = "deny"
+unsafe_code = "allow"
