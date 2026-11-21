@@ -1,0 +1,116 @@
+id = "account_switcher"
+name = "Account Switcher"
+version = "1.0.1"
+description = "Liquid-glass in-game Microsoft & offline account switcher with encrypted local vault."
+authors = ["cosmo-jar"]
+license = "GPL-3.0"
+homepage = "https://github.com/cosmo-jar/Horizon-Account-Switcher"
+issues = "https://github.com/cosmo-jar/Horizon-Account-Switcher/issues"
+api = "0.2"
+side = "client"
+capabilities = ["registries"]
+
+[native]
+game = "26.3"
+horizon = "0a875da91dbb0fdcb7ba8c42c11341aa229af51a"
+mixins = "e59da9094f0c2fdda6c627fe9eff22dec6a906f0"
+
+[[native.module]]
+id = "glue"
+file = "crates/horizon-client/src/game.rs"
+name = "native_account_switcher"
+source = "src/game_glue.rs"
+
+[[native.mixin]]
+id = "remote_auth"
+target = "horizon_client::game::remote::Game<'_>::auth"
+kind = "RETURN"
+helper = "src/mixins/remote_auth.rs"
+bindings = [
+  { name = "game", ty = "&Game<'_>", value = "self" },
+  { name = "original", ty = "Option<std::sync::Arc<horizon_client::auth::AuthSession>>", value = "$value" },
+]
+
+[[native.mixin]]
+id = "join_server_name"
+target = "horizon_client::game::developer_launch::Game<'_>::join_server"
+kind = "WRAP_OPERATION"
+selector = "self.connect_remote_session"
+require = 1
+ordinal = 0
+helper = "src/mixins/join_server_name.rs"
+bindings = [
+  { name = "game", ty = "&mut Game<'_>", value = "$receiver" },
+  { name = "address", ty = "&str", value = "$arg0" },
+  { name = "name", ty = "&str", value = "$arg1" },
+  { name = "local", ty = "Option<horizon_protocol::connection::Pipe>", value = "$arg2" },
+  { name = "cookies", ty = "Option<horizon_client::net::Cookies>", value = "$arg3" },
+  { name = "lan", ty = "bool", value = "$arg4" },
+  { name = "realm", ty = "bool", value = "$arg5" },
+  { name = "op", ty = "impl FnOnce(&mut Game<'_>, &str, &str, Option<horizon_protocol::connection::Pipe>, Option<horizon_client::net::Cookies>, bool, bool) -> Result<()>", value = "$operation" },
+]
+
+[[native.mixin]]
+id = "client_tick_pre"
+target = "horizon_client::game::native_hooks::client_tick_pre::Game<'_>::native_client_tick_pre"
+kind = "HEAD"
+helper = "src/mixins/client_tick_pre.rs"
+bindings = [{ name = "game", ty = "&mut Game<'_>", value = "&mut *self" }]
+
+[[native.mixin]]
+id = "screen_render"
+target = "horizon_client::game::native_hooks::base::Game<'_>::native_screen_render_post"
+kind = "HEAD"
+helper = "src/mixins/screen_render.rs"
+bindings = [
+  { name = "game", ty = "&Game<'_>", value = "self" },
+  { name = "batch", ty = "&mut HudBatch", value = "&mut *draw" },
+  { name = "screen", ty = "&ScreenView<'_>", value = "screen" },
+]
+
+[[native.mixin]]
+id = "screen_mouse_press"
+target = "horizon_client::game::native_hooks::base::Game<'_>::native_screen_mouse_button_pressed_pre"
+kind = "HEAD"
+helper = "src/mixins/screen_mouse_press.rs"
+bindings = [
+  { name = "game", ty = "&Game<'_>", value = "self" },
+  { name = "screen", ty = "&ScreenView<'_>", value = "screen" },
+  { name = "button", ty = "i32", value = "button" },
+  { name = "canceled", ty = "&mut bool", value = "&mut *canceled" },
+]
+
+[[native.mixin]]
+id = "screen_mouse_scroll"
+target = "horizon_client::game::native_hooks::base::Game<'_>::native_screen_mouse_scrolled_pre"
+kind = "HEAD"
+helper = "src/mixins/screen_mouse_scroll.rs"
+bindings = [
+  { name = "game", ty = "&Game<'_>", value = "self" },
+  { name = "scroll", ty = "[f64; 2]", value = "scroll" },
+  { name = "canceled", ty = "&mut bool", value = "&mut *canceled" },
+]
+
+[[native.mixin]]
+id = "screen_key_press"
+target = "horizon_client::game::native_hooks::base::Game<'_>::native_screen_key_pressed_pre"
+kind = "HEAD"
+helper = "src/mixins/screen_key_press.rs"
+bindings = [
+  { name = "game", ty = "&Game<'_>", value = "self" },
+  { name = "screen", ty = "&ScreenView<'_>", value = "screen" },
+  { name = "key", ty = "&str", value = "key" },
+  { name = "modifiers", ty = "u32", value = "modifiers" },
+  { name = "canceled", ty = "&mut bool", value = "&mut *canceled" },
+]
+
+[[native.mixin]]
+id = "screen_char_typed"
+target = "horizon_client::game::native_hooks::base::Game<'_>::native_screen_char_typed_pre"
+kind = "HEAD"
+helper = "src/mixins/screen_char_typed.rs"
+bindings = [
+  { name = "game", ty = "&Game<'_>", value = "self" },
+  { name = "c", ty = "char", value = "c" },
+  { name = "canceled", ty = "&mut bool", value = "&mut *canceled" },
+]
